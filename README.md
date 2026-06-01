@@ -1,38 +1,40 @@
 # Mission Mates
 
-  **Team Up. Build Together. Save the Day.**
+  A fun 20-player browser-based survival game built with Phaser 3, React, and Vite.
 
-  A game design document web app for Mission Mates — a cooperative multiplayer adventure game for kids ages 6–14.
+  ## How to Play
 
-  ## What This Is
+  - **LEFT CLICK** — Fire your equipped item
+  - **RIGHT CLICK (hold)** — Move toward cursor (no keyboard needed!)
+  - **WASD** — Move (keyboard alternative)
+  - **Mouse** — Aim
+  - **Walk over equipment** — Auto pick up (no key needed)
+  - **R** — Reload manually
 
-  This is the official game design document (GDD) web app for Mission Mates. It's a React + Vite application with 8 tabs covering every aspect of the game:
+  ## Game Overview
 
-  1. **Overview** — Vision, pillars, target audience, platforms
-  2. **Gameplay** — Hero classes, game loop, mechanics
-  3. **Features** — Full feature set with accessibility commitments
-  4. **Safety** — Safe chat, parental controls, COPPA compliance, anti-bullying systems
-  5. **Tech Stack** — Unity, Photon Fusion, AWS GameLift, Firebase, Node.js
-  6. **Roadmap** — 5-phase plan Q3 2026 → Q3 2027
-  7. **Business** — Ethical monetization model, revenue projections
-  8. **Dev Guide** — Setup, branching, PR requirements, code standards
+  20 players start across a large map. An enclosing zone shrinks over time — stay inside it or take damage. Pick up better equipment as you go. Last player standing wins!
 
-  ## Stack
+  - 20 players (you + 19 bots)
+  - 4 equipment types: Pistol, AR, Shotgun, Sniper
+  - Shrinking zone with 6 phases
+  - Full HUD: health bar, minimap, ammo counter, zone timer
+  - Buildings, trees, and roads for cover
 
-  - React 19 + Vite 7
-  - TypeScript (strict)
-  - Tailwind CSS v4
-  - shadcn/ui components
-  - Fredoka + Nunito fonts
+  ## Tech Stack
 
-  ## Run Locally
+  - [Phaser 3](https://phaser.io/) — game engine
+  - [React](https://react.dev/) + [Vite](https://vitejs.dev/) — app shell
+  - TypeScript
+
+  ## Development
 
   ```bash
-  pnpm install
-  PORT=3000 BASE_PATH=/ pnpm dev
+  npm install
+  npm run dev
   ```
 
-  ## Live Preview
+  ## License
 
-  Hosted on Replit — see the Preview tab.
+  MIT
   

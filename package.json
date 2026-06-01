@@ -1,5 +1,5 @@
 {
-  "name": "@workspace/mission-mates",
+  "name": "@workspace/battle-royale",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -73,5 +73,8 @@
     "vite": "catalog:",
     "wouter": "^3.3.5",
     "zod": "catalog:"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
   }
 }
