@@ -1182,6 +1182,7 @@ export class GameScene extends Phaser.Scene {
     this.registry.set("kills", this.killCount);
     this.registry.set("alive", this.bots.filter((b) => !b.isDead).length + 1);
     this.registry.set("zoneTimer", this.zoneTimer);
+    this.registry.set("zoneMaxTime", ZONE_PHASES[this.zonePhase]?.waitTime ?? 32);
     this.registry.set("zoneShrinking", this.zoneShrinking);
     this.registry.set("inZone", inZone);
     this.registry.set("isReloading", this.isReloading);

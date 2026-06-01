@@ -37,7 +37,7 @@ export class MenuScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     // Subtitle
-    this.add.text(cx, cy - 90, "BATTLE ROYALE", {
+    this.add.text(cx, cy - 90, "SURVIVAL GAME", {
       fontFamily: "'Rajdhani', 'Barlow', Arial",
       fontSize: "28px",
       fontStyle: "bold",

@@ -1,25 +1,30 @@
 # Mission Mates
 
-  A fun 20-player browser-based survival game built with Phaser 3, React, and Vite.
+  A fun 20-player browser survival game built with Phaser 3, React, and Vite.
 
   ## How to Play
 
-  - **LEFT CLICK** — Fire your equipped item
-  - **RIGHT CLICK (hold)** — Move toward cursor (no keyboard needed!)
-  - **WASD** — Move (keyboard alternative)
-  - **Mouse** — Aim
-  - **Walk over equipment** — Auto pick up (no key needed)
-  - **R** — Reload manually
+  | Control | Action |
+  |---------|--------|
+  | **RIGHT-CLICK + HOLD** | Move your player toward the cursor |
+  | **LEFT-CLICK** | Shoot toward the cursor |
+  | **Walk over glowing items** | Auto-pick up a weapon |
+  | **R key** | Reload manually |
+  | **WASD** | Move (keyboard alternative) |
 
-  ## Game Overview
+  ## Objective
 
-  20 players start across a large map. An enclosing zone shrinks over time — stay inside it or take damage. Pick up better equipment as you go. Last player standing wins!
+  20 players start across a large map. A **blue safe zone** slowly shrinks. Stay inside it — outside you take damage. Last player standing wins!
 
-  - 20 players (you + 19 bots)
-  - 4 equipment types: Pistol, AR, Shotgun, Sniper
-  - Shrinking zone with 6 phases
-  - Full HUD: health bar, minimap, ammo counter, zone timer
-  - Buildings, trees, and roads for cover
+  ## Features
+
+  - 20 players: you + 19 bots with AI
+  - 4 weapon types: Pistol, AR, Shotgun, Sniper
+  - Shrinking safe zone with 6 phases
+  - In-game tutorial overlay on first launch
+  - Full HUD: health bar, zone timer, minimap, ammo
+  - Red vignette warning when outside the safe zone
+  - Auto-pickup: walk over items to collect them
 
   ## Tech Stack
 
