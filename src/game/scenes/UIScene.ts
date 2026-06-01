@@ -3,8 +3,6 @@ import Phaser from "phaser";
 const MAP_SIZE = 4000;
 const MINIMAP_SIZE = 180;
 const MINIMAP_SCALE = MINIMAP_SIZE / MAP_SIZE;
-const TUTORIAL_SECS = 10;
-
 export class UIScene extends Phaser.Scene {
   // HUD elements
   private healthBar!: Phaser.GameObjects.Graphics;
@@ -24,12 +22,6 @@ export class UIScene extends Phaser.Scene {
   private controlsHint!: Phaser.GameObjects.Text;
   private lastHealth = 100;
 
-  // Tutorial
-  private tutorialObjs: Phaser.GameObjects.GameObject[] = [];
-  private tutorialVisible = true;
-  private tutorialTimer = TUTORIAL_SECS;
-  private tutorialTimerTxt!: Phaser.GameObjects.Text;
-
   // Controls hint timer
   private controlsTimer = 8;
   private controlsHintDone = false;
@@ -42,15 +34,12 @@ export class UIScene extends Phaser.Scene {
   }
 
   create() {
-    this.tutorialVisible = true;
-    this.tutorialTimer = TUTORIAL_SECS;
     this.controlsTimer = 8;
     this.controlsHintDone = false;
     this.lastHealth = 100;
 
     const { width, height } = this.scale;
     this.buildHUD(width, height);
-    this.buildTutorial(width, height);
     this.scale.on("resize", this.onResize, this);
   }
 
@@ -150,79 +139,6 @@ export class UIScene extends Phaser.Scene {
   }
 
   // ─────────────────────────────────────────────────────────────────────────────
-  // Tutorial overlay
-  // ─────────────────────────────────────────────────────────────────────────────
-  private buildTutorial(width: number, height: number) {
-    const panelW = 540;
-    const panelH = 370;
-    const px = (width - panelW) / 2;
-    const py = (height - panelH) / 2;
-
-    const addObj = (go: Phaser.GameObjects.GameObject) => {
-      this.tutorialObjs.push(go);
-      return go;
-    };
-
-    const bg = addObj(this.add.graphics().setDepth(200)) as Phaser.GameObjects.Graphics;
-    bg.fillStyle(0x000000, 0.92);
-    bg.fillRoundedRect(px, py, panelW, panelH, 14);
-    bg.lineStyle(2.5, 0xe85d04, 1);
-    bg.strokeRoundedRect(px, py, panelW, panelH, 14);
-
-    addObj(this.add.text(width / 2, py + 26, "HOW TO PLAY  🎮", {
-      fontFamily: "'Rajdhani', Arial", fontSize: "28px", fontStyle: "bold",
-      color: "#e85d04", letterSpacing: 3,
-    }).setOrigin(0.5).setDepth(201));
-
-    const tips = [
-      { key: "RIGHT-CLICK + HOLD",    val: "Move your character toward the mouse cursor" },
-      { key: "LEFT-CLICK",            val: "Shoot in the direction of the mouse" },
-      { key: "Walk over glowing items", val: "Automatically picks up better weapons" },
-      { key: "Blue ring = SAFE ZONE", val: "Outside it, you take damage — run back in!" },
-      { key: "20 players start",      val: "Outlast everyone to win 🏆" },
-    ];
-
-    tips.forEach((t, i) => {
-      const y = py + 72 + i * 48;
-      addObj(this.add.graphics().setDepth(201))
-        .fillStyle(i % 2 === 0 ? 0x111111 : 0x0a0a0a, 0.6)
-        .fillRoundedRect(px + 14, y - 6, panelW - 28, 42, 5) as Phaser.GameObjects.Graphics;
-
-      addObj(this.add.text(px + 28, y + 4, `▸ ${t.key}`, {
-        fontFamily: "'Rajdhani', Arial", fontSize: "15px", fontStyle: "bold", color: "#ffffff",
-      }).setDepth(202));
-      addObj(this.add.text(px + 28, y + 22, t.val, {
-        fontFamily: "Arial", fontSize: "12px", color: "#aaaaaa",
-      }).setDepth(202));
-    });
-
-    // Dismiss button
-    const btnY = py + panelH - 52;
-    const btnBg = addObj(this.add.graphics().setDepth(201)) as Phaser.GameObjects.Graphics;
-    btnBg.fillStyle(0xe85d04, 1);
-    btnBg.fillRoundedRect(width / 2 - 110, btnY, 220, 38, 8);
-
-    const dismiss = addObj(this.add.text(width / 2, btnY + 19, "▶  GOT IT, LET'S GO!", {
-      fontFamily: "'Rajdhani', Arial", fontSize: "17px", fontStyle: "bold", color: "#ffffff",
-    }).setOrigin(0.5).setDepth(202).setInteractive({ useHandCursor: true })) as Phaser.GameObjects.Text;
-
-    dismiss.on("pointerover", () => { btnBg.clear(); btnBg.fillStyle(0xff7a1a, 1); btnBg.fillRoundedRect(width/2-110, btnY, 220, 38, 8); });
-    dismiss.on("pointerout",  () => { btnBg.clear(); btnBg.fillStyle(0xe85d04, 1); btnBg.fillRoundedRect(width/2-110, btnY, 220, 38, 8); });
-    dismiss.on("pointerdown", () => this.hideTutorial());
-
-    this.tutorialTimerTxt = addObj(this.add.text(width / 2, py + panelH - 10, `auto-closes in ${TUTORIAL_SECS}s`, {
-      fontFamily: "Arial", fontSize: "11px", color: "#555555",
-    }).setOrigin(0.5).setDepth(202)) as Phaser.GameObjects.Text;
-  }
-
-  private hideTutorial() {
-    this.tutorialVisible = false;
-    for (const obj of this.tutorialObjs) {
-      (obj as Phaser.GameObjects.GameObject & { setVisible: (v: boolean) => void }).setVisible(false);
-    }
-  }
-
-  // ─────────────────────────────────────────────────────────────────────────────
   // Resize
   // ─────────────────────────────────────────────────────────────────────────────
   private onResize(gameSize: Phaser.Structs.Size) {
@@ -246,14 +162,6 @@ export class UIScene extends Phaser.Scene {
     const dt = delta / 1000;
     const reg = this.registry;
     const { width, height } = this.scale;
-
-    // ── Tutorial countdown ────────────────────────────────────────────────────
-    if (this.tutorialVisible) {
-      this.tutorialTimer -= dt;
-      const secsLeft = Math.ceil(Math.max(0, this.tutorialTimer));
-      this.tutorialTimerTxt.setText(`auto-closes in ${secsLeft}s`);
-      if (this.tutorialTimer <= 0) this.hideTutorial();
-    }
 
     // ── Controls hint fade ────────────────────────────────────────────────────
     if (!this.controlsHintDone) {

@@ -1,45 +1,87 @@
-# Mission Mates
+# Mission Mates 🎮
 
-  A fun 20-player browser survival game built with Phaser 3, React, and Vite.
+  A 20-player browser survival game built with **Phaser 3**, **React**, and **Vite**. No downloads, no server — runs entirely in the browser.
 
-  ## How to Play
+  ---
 
-  | Control | Action |
-  |---------|--------|
-  | **RIGHT-CLICK + HOLD** | Move your player toward the cursor |
-  | **LEFT-CLICK** | Shoot toward the cursor |
-  | **Walk over glowing items** | Auto-pick up a weapon |
-  | **R key** | Reload manually |
-  | **WASD** | Move (keyboard alternative) |
+  ## Play it
 
-  ## Objective
+  > Open the hosted URL and click **GOT IT, LET'S GO!** to start. Outlast all 19 bots to win.
 
-  20 players start across a large map. A **blue safe zone** slowly shrinks. Stay inside it — outside you take damage. Last player standing wins!
+  ---
+
+  ## Controls
+
+  | Input | Action |
+  |-------|--------|
+  | **Right-click + hold** | Move toward cursor |
+  | **Left-click** | Shoot |
+  | **Walk over glowing item** | Auto-pick up weapon |
+  | **R** | Reload |
+
+  ---
 
   ## Features
 
-  - 20 players: you + 19 bots with AI
-  - 4 weapon types: Pistol, AR, Shotgun, Sniper
-  - Shrinking safe zone with 6 phases
-  - In-game tutorial overlay on first launch
-  - Full HUD: health bar, zone timer, minimap, ammo
-  - Red vignette warning when outside the safe zone
-  - Auto-pickup: walk over items to collect them
+  - 🟠 20 players (1 human + 19 AI bots) on a 4000×4000 map
+  - 🔵 Shrinking safe zone with 6 phases — stay inside or lose health
+  - 🔫 3 weapons with different damage/ammo: Pistol, Shotgun, Rifle
+  - 🗺️ Live minimap with zone ring, enemy dots, and player position
+  - ❤️ Health bar with blood-flash on damage
+  - ⚠️ Red vignette border + warning banner when outside the safe zone
+  - 🎮 Tutorial overlay on every game start (auto-closes in 10s)
+  - 🏆 Win / eliminated end screen
 
-  ## Tech Stack
+  ---
 
-  - [Phaser 3](https://phaser.io/) — game engine
-  - [React](https://react.dev/) + [Vite](https://vitejs.dev/) — app shell
-  - TypeScript
+  ## Tech stack
 
-  ## Development
+  | Layer | Library |
+  |-------|---------|
+  | Game engine | Phaser 3.90 |
+  | UI / overlay | React 18 + Vite |
+  | Language | TypeScript |
+  | Graphics | Phaser Graphics API (no image assets) |
+
+  ---
+
+  ## Run locally
 
   ```bash
   npm install
   npm run dev
   ```
 
-  ## License
+  Then open http://localhost:5173.
 
-  MIT
+  ---
+
+  ## Deploy on Replit
+
+  1. Fork or import this repo into a new Replit project
+  2. Set the **Install command**: `npm install`
+  3. Set the **Start command**: `npm run dev -- --host 0.0.0.0 --port $PORT`
+  4. Click **Run** — Replit will open the hosted URL automatically
+
+  For a production build instead:
+  ```
+  npm run build && npx vite preview --host 0.0.0.0 --port $PORT
+  ```
+
+  ---
+
+  ## Project structure
+
+  ```
+  src/
+  ├── main.tsx                  — React entry point
+  ├── App.tsx                   — Canvas host + tutorial HTML overlay
+  ├── index.css                 — Global reset
+  └── game/
+      ├── config.ts             — Phaser game config
+      └── scenes/
+          ├── MenuScene.ts      — Title / start screen
+          ├── GameScene.ts      — Main game logic (player, bots, zone, weapons)
+          └── UIScene.ts        — HUD overlay (health, ammo, minimap, zone bar)
+  ```
   
